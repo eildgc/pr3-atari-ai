@@ -27,6 +27,7 @@ parser.add_argument('--discount_factor', type=int, default=0.99)
 parser.add_argument('--render', action='store_true')
 args = parser.parse_args()
 
+# Son los controles de movimiento que tendra en el juego 
 # Action values to send to gym environment to move paddle up/down
 UP_ACTION = 2
 DOWN_ACTION = 3

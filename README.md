@@ -4,7 +4,14 @@ Proyecto #3 y entrega final de la materia Inteligencia Artificial. Agente de Int
 Para este proyecto se utilizió el repositorio de mrahtz (https://github.com/mrahtz/tensorflow-rl-pong) que está basado en la entrada del blog http://karpathy.github.io/2016/05/31/rl/ de Andrej Karpathy.
 Se entrenó la inteligencia artificial desde 0 para mejor comprensión del funcionamiento del aprendizaje reforzado.
 
+A palabras de Karpathy, el Pong es un excelente ejemplo de una simple tarea de aprendizaje reforzado. La inteligencia artificial controlara una de las barritas (la otra es controlada por otra AI decente, la del juego) y lo que se tiene que hacer es rebotar la pelota y que pase al otro jugador.
+
+El juego básicamente funciona así: se recibe el frame de una imagen (un array de 210x160x3 byte (enteros que van de 0 a 255 dando valores de pixeles)). Y se debe decidir si la barrita debe ir hacia arriba o abajo (Que sería una decisión binaria). Después de cada elección que el juego ejecute la acción, dará una recompensa que será un +1 si la pelota pasó al otro jugador o un -1 si la pelota nos pasó a nosotros. El objetivo es que la barrita se mueva para obtener muchas recompensas.
+
+pip freeze -l > requirements.txt 
+
 ## Aprendizaje forzado - Introducción
+
 Inicialmente en el aprendizaje reforzado (a diferencia del aprendizaje supervisado) se desconoce qué está bien o qué está mal de nuestra información, la única forma de saber esto al inicio es probando y ver si funciona. Se auto generan variables a traves de observaciones y retroalimentación.
 
 Uno de los ejemplos que utiliza Soroush (thinkingparticle) para comprender mejor lo que es el aprendizaje forzado y sus implicaciones, nos pide que nos imaginemos un mundo imaginario donde somos gerentes de un nuevo departamento y no conocemos a nuestros empleados, no tenemos acceso a sus curriculum ni registros. No sabemos cual empleado es un diseñador, un programador, o del área de atención al cliente, etc.
@@ -18,16 +25,24 @@ Ambiente(environment): El mundo con el que el agente puede interactuar. El agent
 Recompensa(reward): El agente obtiene recompensas o castigos según sus acciones. 
 Policy gradient: Una de las clases de algoritmos de control más importantes. Es un acercamiento para resolver problemas de aprendizaje reforzado.
 
+# Network policy
+
+Entre las primeras cosas que se planean es la política de red que se implementará a nuestro jugador (o agente en este caso). Esta red tomará el estatus del juego y decidirá que se debería hacer (moverse hacia arriba o abajo). Se usará un simple bloque a computar con 2-layer de redes neuronales que tomará una imagen raw en pixeles que producirá un simple número indicando la probabilidad de ir hacia arriba. Se distingue que en este caso es estándar utilizar una política estocástica, esto quiere decir que solo se producirá la probabilidad de que la AI mueva la barrita hacia arrba. En cada iteración se tomará una muestra de esta distribución, como tirar de una moneda, para obtener el movimiento que ocurrirá.
+
+Se supone tendremos un vector que tendra información preprocesada de los pixeles.
+Se inicializan dos matrices de manera random cuyo resultado se redondea en el rango de 0 y 1 (el primer valor esta dentro de la hidden layer). Una de las hidden layer detectará varios escenarios del juego y el segundo valor decidirá cada caso si debería ir hacia arriba o abajo.
+
+Estan recomendados alimentar la política de red con al menos 2 frames para esta red política para que pueda detectar movimiento.
+
 ## Policy Gradients 
 
 En este algoritmo se usó una policy para ver que acciones llevan a recompensas altas para incrementar la probabilidad de que se repitan.
 El proposito del aprendizaje forzado es encontrar la estrategia de comportamiento mas optima para que el agente reciba las mejores recompensas. 
 
 # Stochastic policy 
+
 Estocástico: Sometido al azar y que es objeto de analisis estadistico. Se aplica a procesos, algoritmos y modelos en los que existe una secuencia cambiante de eventos analizables probabilísticamente a medida que pasa el tiempo.
 Toma ejemplos de acciones acciones y si esas acciones eventualmente ocurren y llevan a un buen desenlace son motivadas para que se repitan en el futuro, pero si esas acciones tomadas llevan aun mal resultando, son desmotivadas.
-
-
 
 # Vocabulario:
 
@@ -41,8 +56,10 @@ Toma ejemplos de acciones acciones y si esas acciones eventualmente ocurren y ll
 
 # Protocolo de entrenamiento
 
-La política 
-Training protocol. So here is how the training will work in detail. We will initialize the policy network with some W1, W2 and play 100 games of Pong (we call these policy “rollouts”). Lets assume that each game is made up of 200 frames so in total we’ve made 20,000 decisions for going UP or DOWN and for each one of these we know the parameter gradient, which tells us how we should change the parameters if we wanted to encourage that decision in that state in the future. All that remains now is to label every decision we’ve made as good or bad. For example suppose we won 12 games and lost 88. We’ll take all 200*12 = 2400 decisions we made in the winning games and do a positive update (filling in a +1.0 in the gradient for the sampled action, doing backprop, and parameter update encouraging the actions we picked in all those states). And we’ll take the other 200*88 = 17600 decisions we made in the losing games and do a negative update (discouraging whatever we did). And… that’s it. The network will now become slightly more likely to repeat actions that worked, and slightly less likely to repeat actions that didn’t work. Now we play another 100 games with our new, slightly improved policy and rinse and repeat.
+La política de red se inicializa con ciertos parametros y juega 100 juegos de Pong (llamado despliegue de política) Donde se asume que cada juego consiste de 200 frames asi que en total se hacen 20,000 decisiones por ir "arriba" o "abajo" y por cada uno de estos nosotros sabemos el parametro del gradiente, el cual nos dice que deberiamos cambiar los parametros si queremos motivar la decision en este estado en el futuro. Todo loq ue queda es etiquetar cada decision que s egha hecho como buena o mala. Por ejemplo supongamos que ganamos 12 juegos y perdemos 88. Si tomamos todo 200*12 = 2400 decisiones que hemos hecho para ganar los juegos y obtener una actualizacion positiva (llenando un +1.0 en el gradiente de la accion ejemplificada). Y tomamos las otras 200*88 = 17600 decisiones en los juegos que se perdieron y hacemos una actualizacion negativa (desmotivando lo que hicimos). Y asi el sistema se inclinara mas a repetir acciones que funcionaron y tendra menos probabilidades de repetir acciones que no funcionaron. Asi que ahora solo deben jugarse otros 100 juegos con este sistema y repetirse una y otra vez.
+
+# 
+
 
 ## Fuentes y referencias
 https://github.com/mrahtz/tensorflow-rl-pong
