@@ -10,6 +10,7 @@ El juego básicamente funciona así: se recibe el frame de una imagen (un array 
 
 
 ### Uso
+
 - Crear y activar virtualenv
 - Se incluye requeriment.txt con las instalaciones necesarias
 (practicamente: Python 3.8, OpenAI Gym y Tensorflow 2.2)
@@ -48,7 +49,7 @@ Estan recomendados alimentar la política de red con al menos 2 frames para esta
 En este algoritmo se usó una policy para ver que acciones llevan a recompensas altas para incrementar la probabilidad de que se repitan.
 El proposito del aprendizaje forzado es encontrar la estrategia de comportamiento mas optima para que el agente reciba las mejores recompensas. 
 
-# Stochastic policy 
+## Stochastic policy 
 
 Estocástico: Sometido al azar y que es objeto de analisis estadistico. Se aplica a procesos, algoritmos y modelos en los que existe una secuencia cambiante de eventos analizables probabilísticamente a medida que pasa el tiempo.
 Toma ejemplos de acciones acciones y si esas acciones eventualmente ocurren y llevan a un buen desenlace son motivadas para que se repitan en el futuro, pero si esas acciones tomadas llevan aun mal resultando, son desmotivadas.
@@ -71,8 +72,8 @@ La política de red se inicializa con ciertos parametros y juega 100 juegos de P
 
 
 ## Fuentes y referencias
-https://github.com/mrahtz/tensorflow-rl-pong
-https://www.tensorflow.org/guide/upgrade
-https://gym.openai.com/envs/#atari
-https://github.com/thinkingparticle/deep_rl_pong_keras
+- https://github.com/mrahtz/tensorflow-rl-pong
+- https://www.tensorflow.org/guide/upgrade
+- https://gym.openai.com/envs/#atari
+- https://github.com/thinkingparticle/deep_rl_pong_keras
 
