@@ -14,6 +14,7 @@ import argparse
 import pickle
 import numpy as np
 import gym
+import time
 
 from policy_network import Network
 
@@ -88,11 +89,11 @@ while True:
 
     while not episode_done:
         if args.render:
+            time.sleep(1/60)
             env.render()
 
         observation_delta = observation - last_observation
         last_observation = observation
-        # up_probability = network.forward_pass(observation_delta)[0]
         up_probability = network.forward_pass(observation_delta)[0]
 
         if np.random.uniform() < up_probability:

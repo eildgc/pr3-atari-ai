@@ -8,7 +8,15 @@ A palabras de Karpathy, el Pong es un excelente ejemplo de una simple tarea de a
 
 El juego básicamente funciona así: se recibe el frame de una imagen (un array de 210x160x3 byte (enteros que van de 0 a 255 dando valores de pixeles)). Y se debe decidir si la barrita debe ir hacia arriba o abajo (Que sería una decisión binaria). Después de cada elección que el juego ejecute la acción, dará una recompensa que será un +1 si la pelota pasó al otro jugador o un -1 si la pelota nos pasó a nosotros. El objetivo es que la barrita se mueva para obtener muchas recompensas.
 
-pip freeze -l > requirements.txt 
+
+### Uso
+- Crear y activar virtualenv
+- Se incluye requeriment.txt con las instalaciones necesarias
+(practicamente: Python 3.8, OpenAI Gym y Tensorflow 2.2)
+
+El programa se inicia escribiendo --load_checkpoint --renter para ver como juega tras haber sido entrenada con ~5,000 episodios.
+
+Si se quiere entrenar desde 0 no debe incluirse ningún argumento.
 
 ## Aprendizaje forzado - Introducción
 
