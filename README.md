@@ -14,7 +14,8 @@ El juego básicamente funciona así: se recibe el frame de una imagen (un array 
 - Se incluye requeriment.txt con las instalaciones necesarias
 (practicamente: Python 3.8, OpenAI Gym y Tensorflow 2.2)
 
-El programa se inicia escribiendo --load_checkpoint --renter para ver como juega tras haber sido entrenada con ~5,000 episodios.
+El programa se inicia escribiendo --load_checkpoint --render para ver como juega tras haber sido entrenada con ~5,000 episodios.
+Dicho render se visualizará en tiempo con este tiempo 1/60
 
 Si se quiere entrenar desde 0 no debe incluirse ningún argumento.
 
